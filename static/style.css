@@ -1,0 +1,268 @@
+/* Reset & Global Mobile-First Tokens */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    --safe-area-top: env(safe-area-inset-top, 0px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+    --min-touch-target: 48px;
+}
+
+html, body {
+    width: 100vw;
+    height: 100dvh; /* Dynamic Viewport Height prevents iOS/Android URL bar shifts */
+    overflow: hidden;
+    background-color: #000000;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Canvas Container */
+.canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    z-index: 1;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none; /* Prevents touch scrolling / pinch-zooming over canvas */
+}
+
+/* Mobile Bottom Sheet Control Panel */
+.control-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    width: 60%;
+    max-height: 80dvh;
+    background: rgba(18, 18, 24, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px 24px 0 0;
+    padding: 8px 16px calc(16px + var(--safe-area-bottom)) 16px;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Sheet Handle Bar for Dragging/Tapping */
+.sheet-handle-bar {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sheet-handle {
+    width: 38px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 3px;
+}
+
+/* Collapsed Bottom Sheet State */
+.control-panel.collapsed {
+    transform: translateY(calc(100% - 64px - var(--safe-area-bottom)));
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0 12px 0;
+}
+
+.panel-header h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: #ffffff;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    min-width: var(--min-touch-target);
+    min-height: var(--min-touch-target);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #ffffff;
+    font-size: 1.1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.icon-btn:active {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(0.95);
+}
+
+.panel-scroll-content {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 2px;
+}
+
+/* Mobile-First Input Grid (Single Column on Small Screens) */
+.control-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+}
+
+/* Ergonomic Touch Target Elements */
+input[type="text"],
+select {
+    min-height: var(--min-touch-target);
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 0 14px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+input[type="range"] {
+    accent-color: #ffffff;
+    min-height: var(--min-touch-target);
+    cursor: pointer;
+}
+
+/* Touch Action Bar */
+.action-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn {
+    min-height: var(--min-touch-target);
+    padding: 0 16px;
+    border-radius: 25px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn-primary {
+    background: #ffffff;
+    color: #000000;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+.btn-outline {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.status-message {
+    font-size: 0.8rem;
+    color: #ffb6c1;
+    text-align: center;
+    margin-top: 10px;
+    min-height: 18px;
+}
+
+/* Progressive Tablet & Desktop Enhancement Breakpoints */
+@media (min-width: 600px) {
+    .control-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 900px) {
+    .control-panel {
+        top: 20px;
+        left: 20%;
+        bottom: auto;
+        right: auto;
+        transform: translateX(-50%);
+        width: 36%;
+        max-width: 680px;
+        max-height: none;
+        border-radius: 24px;
+        padding: 16px 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .sheet-handle-bar {
+        display: none;
+    }
+
+    .control-panel.collapsed {
+        transform: translate(-50%, -10px);
+        max-width: 320px;
+    }
+
+    .control-panel.collapsed .panel-scroll-content {
+        display: none;
+    }
+
+    .control-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .action-bar {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .btn {
+        min-height: 40px;
+    }
+}
